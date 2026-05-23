@@ -23,8 +23,6 @@ echo "✅  Key injected. Starting server at http://localhost:3000"
 python3 - <<'EOF'
 import http.server, os, signal, sys
 
-os.chdir(os.path.dirname(os.path.abspath(__file__ )) + "/..")
-
 class Handler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
         if self.path in ('/', '/index.html'):

@@ -16,13 +16,13 @@
       --orange:       #FF6B35;
       --orange-dark:  #E55A24;
       --orange-light: #FF8C5A;
-      --navy:         #0A1628;
-      --card:         #111F33;
-      --border:       #1E3550;
-      --teal:         #00C49A;
-      --teal-dark:    #009B7A;
-      --muted:        #94A3B8;
-      --text:         #F1F5F9;
+      --navy:         #FFFFFF;
+      --card:         #FFF4EF;
+      --border:       #E8D0C4;
+      --teal:         #009B7A;
+      --teal-dark:    #007A60;
+      --muted:        #8A7060;
+      --text:         #1A0800;
     }
 
     *, *::before, *::after { box-sizing: border-box; }
@@ -70,7 +70,7 @@
       background: transparent; border: 1px solid var(--border);
       color: var(--muted);
     }
-    .btn-secondary:hover { border-color: var(--orange); color: #fff; }
+    .btn-secondary:hover { border-color: var(--orange); color: var(--orange); }
     .btn-full { width: 100%; }
 
     /* ── Form elements ───────────────────────────────── */
@@ -158,8 +158,8 @@
     /* ── Grid bg ─────────────────────────────────────── */
     .grid-bg {
       background-image:
-        linear-gradient(rgba(30,53,80,.3) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(30,53,80,.3) 1px, transparent 1px);
+        linear-gradient(rgba(255,107,53,.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,107,53,.08) 1px, transparent 1px);
       background-size: 44px 44px;
     }
 
@@ -188,8 +188,8 @@
   <div id="root">
     <!-- Loading state shown before React boots -->
     <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;">
-      <div style="width:44px;height:44px;border:4px solid #1E3550;border-top-color:#FF6B35;border-radius:50%;animation:spin 1s linear infinite;"></div>
-      <p style="color:#94A3B8;font-family:Inter,sans-serif;font-size:14px;">Loading Talk Pro...</p>
+      <div style="width:44px;height:44px;border:4px solid #E8D0C4;border-top-color:#FF6B35;border-radius:50%;animation:spin 1s linear infinite;"></div>
+      <p style="color:#8A7060;font-family:Inter,sans-serif;font-size:14px;">Loading Talk Pro...</p>
     </div>
   </div>
 
@@ -391,7 +391,7 @@ Return ONLY valid JSON:
 
     function LoadingOverlay({ message }) {
       return (
-        <div style={{ position:'fixed', inset:0, zIndex:100, background:'rgba(10,22,40,.88)', backdropFilter:'blur(6px)', display:'flex', alignItems:'center', justifyContent:'center' }} className="anim-fade">
+        <div style={{ position:'fixed', inset:0, zIndex:100, background:'rgba(255,244,239,.88)', backdropFilter:'blur(6px)', display:'flex', alignItems:'center', justifyContent:'center' }} className="anim-fade">
           <div className="card" style={{ padding:36, maxWidth:340, width:'90%', textAlign:'center' }}>
             <div style={{ position:'relative', width:60, height:60, margin:'0 auto 20px' }}>
               <div style={{ position:'absolute', inset:0, border:'4px solid var(--border)', borderRadius:'50%' }} />
@@ -1055,7 +1055,7 @@ Return ONLY valid JSON:
       return (
         <div className="anim-fade" style={{ minHeight:'100vh', display:'flex', flexDirection:'column', background:'var(--navy)' }}>
           {/* Sticky top bar */}
-          <div style={{ position:'sticky', top:0, zIndex:10, background:'rgba(10,22,40,.9)', backdropFilter:'blur(8px)', borderBottom:'1px solid var(--border)', padding:'14px 16px' }}>
+          <div style={{ position:'sticky', top:0, zIndex:10, background:'rgba(255,255,255,.92)', backdropFilter:'blur(8px)', borderBottom:'1px solid var(--border)', padding:'14px 16px' }}>
             <div className="container">
               <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:10 }}>
                 <div style={{ display:'flex', alignItems:'center', gap:8 }}>
@@ -1175,7 +1175,7 @@ Return ONLY valid JSON:
       return (
         <div className="anim-fade" style={{ minHeight:'100vh', paddingBottom:60 }}>
           {/* Header */}
-          <div style={{ borderBottom:'1px solid var(--border)', padding:'18px 16px', background:'rgba(10,22,40,.95)', backdropFilter:'blur(6px)', position:'sticky', top:0, zIndex:10 }}>
+          <div style={{ borderBottom:'1px solid var(--border)', padding:'18px 16px', background:'rgba(255,255,255,.95)', backdropFilter:'blur(6px)', position:'sticky', top:0, zIndex:10 }}>
             <div className="container" style={{ display:'flex', alignItems:'center', justifyContent:'space-between' }}>
               <div style={{ display:'flex', alignItems:'center', gap:10 }}>
                 <div style={{ width:32, height:32, borderRadius:9, background:'var(--orange)', display:'flex', alignItems:'center', justifyContent:'center', color:'#fff', fontWeight:900, fontSize:12 }}>TP</div>
@@ -1314,7 +1314,7 @@ Return ONLY valid JSON:
             </div>
 
             {/* Upgrade CTA */}
-            <div className="card" style={{ padding:28, marginBottom:20, textAlign:'center', border:'1px solid rgba(255,107,53,.25)', background:'linear-gradient(135deg, var(--card) 0%, rgba(10,22,40,.8) 100%)' }}>
+            <div className="card" style={{ padding:28, marginBottom:20, textAlign:'center', border:'1px solid rgba(255,107,53,.25)', background:'linear-gradient(135deg, var(--card) 0%, rgba(255,220,200,.5) 100%)' }}>
               <span className="badge badge-orange" style={{ marginBottom:12 }}>Upgrade Coming Soon</span>
               <h3 style={{ fontWeight:800, fontSize:20, marginBottom:8 }}>Want a Full 30-Min Mock Interview?</h3>
               <p style={{ color:'var(--muted)', fontSize:14, lineHeight:1.65, maxWidth:380, margin:'0 auto 20px' }}>
