@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: #0A1628;
+    color: #F1F5F9;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0A1628;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1E3550;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #FF6B35;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-brand-card border border-brand-border rounded-2xl;
+  }
+
+  .btn-primary {
+    @apply bg-brand-orange hover:bg-brand-orange-dark text-white font-semibold
+           px-6 py-3 rounded-xl transition-all duration-200
+           active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed
+           disabled:active:scale-100;
+  }
+
+  .btn-secondary {
+    @apply border border-brand-border hover:border-brand-orange text-brand-muted
+           hover:text-white font-medium px-6 py-3 rounded-xl transition-all duration-200
+           active:scale-95;
+  }
+
+  .input-field {
+    @apply w-full bg-brand-navy border border-brand-border rounded-xl px-4 py-3
+           text-white placeholder-brand-muted focus:outline-none focus:border-brand-orange
+           transition-colors duration-200;
+  }
+
+  .label {
+    @apply block text-sm font-medium text-brand-muted mb-1.5;
+  }
+
+  .badge-coming-soon {
+    @apply text-xs font-bold uppercase tracking-wider bg-brand-border
+           text-brand-muted px-2 py-0.5 rounded-full;
+  }
+
+  .step-dot {
+    @apply w-2 h-2 rounded-full transition-all duration-300;
+  }
+}
+
+@layer utilities {
+  .text-gradient-orange {
+    background: linear-gradient(135deg, #FF6B35 0%, #FF8C5A 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glow-orange {
+    box-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
+  }
+
+  .glow-teal {
+    box-shadow: 0 0 20px rgba(0, 196, 154, 0.25);
+  }
+
+  .bg-grid {
+    background-image:
+      linear-gradient(rgba(30, 53, 80, 0.4) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(30, 53, 80, 0.4) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+}
+
+/* Score circle animation */
+.score-circle-progress {
+  stroke-dasharray: 339.29;
+  stroke-dashoffset: 339.29;
+  animation: scoreReveal 1.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+  transform-origin: center;
+  transform: rotate(-90deg);
+}
+
+@keyframes scoreReveal {
+  to {
+    stroke-dashoffset: var(--target-offset);
+  }
+}
+
+/* Shimmer for loading skeleton */
+.shimmer {
+  background: linear-gradient(90deg, #111F33 25%, #1E3550 50%, #111F33 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

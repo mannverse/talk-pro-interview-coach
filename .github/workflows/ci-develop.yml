@@ -1,0 +1,43 @@
+name: CI — Develop
+
+on:
+  push:
+    branches: [develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check placeholder is present (key not hardcoded)
+        run: |
+          if grep -q "__GEMINI_API_KEY__" index.html; then
+            echo "✅  Placeholder found — key is not hardcoded in source."
+          else
+            echo "❌  __GEMINI_API_KEY__ placeholder missing from index.html."
+            echo "    Do not commit a real API key to source. Use the placeholder."
+            exit 1
+          fi
+
+      - name: Check no real key accidentally committed
+        run: |
+          if grep -qE "AIzaSy[A-Za-z0-9_-]{33}" index.html; then
+            echo "❌  A real Gemini API key was detected in index.html. Remove it!"
+            exit 1
+          else
+            echo "✅  No API key found in source."
+          fi
+
+      - name: Validate HTML structure
+        run: |
+          if grep -q "ReactDOM.createRoot" index.html && grep -q "callGemini" index.html; then
+            echo "✅  Core app structure looks good."
+          else
+            echo "❌  Expected app structure not found in index.html."
+            exit 1
+          fi

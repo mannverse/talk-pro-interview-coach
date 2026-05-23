@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+
+# Local env — NEVER commit real keys
+.env
+.env.local
+.env.*.local
+
+# Local dev temp file (key-injected copy of index.html)
+.index.dev.html
+
+# Build output
+dist/
+
+# macOS
+.DS_Store
+
+# Claude Code local config
+.claude/
+
+# Editor
+.vscode/
+*.swp

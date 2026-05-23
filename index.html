@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Talk Pro Interview Coach · with Aman</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* ── Brand tokens ─────────────────────────────────── */
+    :root {
+      --orange:       #FF6B35;
+      --orange-dark:  #E55A24;
+      --orange-light: #FF8C5A;
+      --navy:         #0A1628;
+      --card:         #111F33;
+      --border:       #1E3550;
+      --teal:         #00C49A;
+      --teal-dark:    #009B7A;
+      --muted:        #94A3B8;
+      --text:         #F1F5F9;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--navy);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* ── Scrollbar ───────────────────────────────────── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--navy); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--orange); }
+
+    /* ── Layout helpers ──────────────────────────────── */
+    .container { max-width: 680px; margin: 0 auto; padding: 0 16px; }
+    .container-md { max-width: 880px; margin: 0 auto; padding: 0 16px; }
+
+    /* ── Card ────────────────────────────────────────── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+    }
+    .card-hover { transition: transform .2s, border-color .2s; }
+    .card-hover:hover { transform: translateY(-2px); border-color: rgba(255,107,53,.45); }
+
+    /* ── Buttons ─────────────────────────────────────── */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      font-family: inherit; font-weight: 600; cursor: pointer;
+      border-radius: 14px; padding: 13px 26px;
+      border: none; outline: none; transition: all .18s; text-decoration: none;
+      font-size: 15px; line-height: 1;
+    }
+    .btn:disabled { opacity: .45; cursor: not-allowed; pointer-events: none; }
+    .btn:active:not(:disabled) { transform: scale(.97); }
+    .btn-primary { background: var(--orange); color: #fff; }
+    .btn-primary:hover:not(:disabled) { background: var(--orange-dark); box-shadow: 0 0 22px rgba(255,107,53,.35); }
+    .btn-secondary {
+      background: transparent; border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .btn-secondary:hover { border-color: var(--orange); color: #fff; }
+    .btn-full { width: 100%; }
+
+    /* ── Form elements ───────────────────────────────── */
+    .input {
+      width: 100%; background: var(--navy); border: 1.5px solid var(--border);
+      border-radius: 12px; padding: 13px 16px; color: var(--text);
+      font-family: inherit; font-size: 14px; outline: none;
+      transition: border-color .2s;
+    }
+    .input:focus { border-color: var(--orange); }
+    .input::placeholder { color: var(--muted); }
+    .input-password { padding-right: 48px; }
+    textarea.input { resize: vertical; line-height: 1.6; }
+    .label { display: block; font-size: 13px; font-weight: 500; color: var(--muted); margin-bottom: 6px; }
+
+    /* ── Badges ──────────────────────────────────────── */
+    .badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .06em; padding: 4px 10px; border-radius: 99px;
+    }
+    .badge-orange { background: rgba(255,107,53,.12); border: 1px solid rgba(255,107,53,.3); color: var(--orange); }
+    .badge-teal   { background: rgba(0,196,154,.12);  border: 1px solid rgba(0,196,154,.3);  color: var(--teal); }
+    .badge-gray   { background: var(--border);        border: 1px solid var(--border);        color: var(--muted); }
+
+    /* ── Chip (toggle-style tag) ─────────────────────── */
+    .chip {
+      padding: 8px 16px; border-radius: 12px; font-size: 13px; font-weight: 500;
+      border: 1px solid var(--border); color: var(--muted); cursor: pointer;
+      background: transparent; font-family: inherit; transition: all .16s;
+    }
+    .chip:hover { border-color: rgba(255,107,53,.5); color: var(--text); }
+    .chip.active { background: rgba(255,107,53,.1); border-color: var(--orange); color: var(--orange); }
+    .chip-teal.active { background: rgba(0,196,154,.1); border-color: var(--teal); color: var(--teal); }
+
+    /* ── Step header dots ────────────────────────────── */
+    .step-dots { display: flex; align-items: flex-start; gap: 0; }
+    .step-item { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .step-dot { width: 8px; height: 8px; border-radius: 99px; transition: all .3s; }
+    .step-dot.done  { background: var(--teal); }
+    .step-dot.active { width: 20px; background: var(--orange); }
+    .step-dot.pending { background: var(--border); }
+    .step-line { width: 32px; height: 1px; background: var(--border); margin-top: 3px; flex-shrink: 0; }
+    .step-line.done { background: var(--teal); }
+    .step-label { font-size: 10px; font-weight: 500; }
+    .step-label.done  { color: var(--teal); }
+    .step-label.active { color: var(--orange); }
+    .step-label.pending { color: var(--border); }
+
+    /* ── Progress bar ────────────────────────────────── */
+    .progress-track { height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; }
+    .progress-fill {
+      height: 100%; background: linear-gradient(90deg, var(--orange), var(--orange-light));
+      border-radius: 99px; transition: width .5s ease;
+    }
+
+    /* ── Score circle ────────────────────────────────── */
+    @keyframes scoreReveal {
+      to { stroke-dashoffset: var(--target-offset); }
+    }
+    .score-arc {
+      stroke-dasharray: 339.292;
+      stroke-dashoffset: 339.292;
+      animation: scoreReveal 1.8s cubic-bezier(.4,0,.2,1) .3s forwards;
+      transform-origin: center;
+      transform: rotate(-90deg);
+    }
+
+    /* ── Animations ──────────────────────────────────── */
+    @keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideUp { from { transform: translateY(22px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    @keyframes spin    { to { transform: rotate(360deg); } }
+    @keyframes blink   { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+    @keyframes pulseRing { 0% { transform: scale(1); opacity: .5; } 100% { transform: scale(1.35); opacity: 0; } }
+
+    .anim-fade  { animation: fadeIn  .4s ease-out; }
+    .anim-up    { animation: slideUp .4s ease-out; }
+    .spinner    { animation: spin 1s linear infinite; }
+    .blink      { animation: blink .8s ease-in-out infinite; }
+    .pulse-ring {
+      position: absolute; inset: 0; border-radius: 50%;
+      animation: pulseRing 1.8s ease-out infinite;
+    }
+
+    /* ── Grid bg ─────────────────────────────────────── */
+    .grid-bg {
+      background-image:
+        linear-gradient(rgba(30,53,80,.3) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(30,53,80,.3) 1px, transparent 1px);
+      background-size: 44px 44px;
+    }
+
+    /* ── Timer warning state ─────────────────────────── */
+    .timer-warn { animation: blink .8s ease-in-out infinite; }
+
+    /* ── Accordion ───────────────────────────────────── */
+    .accordion-body { overflow: hidden; }
+    .accordion-body.open { display: block; }
+    .accordion-body.closed { display: none; }
+
+    /* ── Misc ────────────────────────────────────────── */
+    .truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .line-clamp-3 {
+      display: -webkit-box; -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .mono { font-family: 'SF Mono', 'Fira Code', monospace; }
+    .drag-over { border-color: var(--orange) !important; background: rgba(255,107,53,.07) !important; }
+    .tab-active { background: var(--card); color: var(--text); border: 1px solid var(--border); }
+    .glow-orange { box-shadow: 0 0 24px rgba(255,107,53,.3); }
+    .glow-teal   { box-shadow: 0 0 24px rgba(0,196,154,.22); }
+  </style>
+</head>
+<body>
+  <div id="root">
+    <!-- Loading state shown before React boots -->
+    <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;">
+      <div style="width:44px;height:44px;border:4px solid #1E3550;border-top-color:#FF6B35;border-radius:50%;animation:spin 1s linear infinite;"></div>
+      <p style="color:#94A3B8;font-family:Inter,sans-serif;font-size:14px;">Loading Talk Pro...</p>
+    </div>
+  </div>
+
+  <!-- Dependencies -->
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.24.7/babel.min.js"></script>
+
+  <script type="text/babel" data-presets="react">
+    'use strict';
+    const { useState, useEffect, useRef, useCallback } = React;
+
+    /* ── API key — users never see or touch this ────────
+       For production: move to a backend proxy so the key
+       is never exposed in client-side source.            */
+    const GEMINI_API_KEY = '__GEMINI_API_KEY__';
+
+    /* ═══════════════════════════════════════════════════
+       UTILITIES
+    ═══════════════════════════════════════════════════ */
+
+    // Gemini 2.0 Flash — free tier, 1500 req/day
+    async function callGemini(apiKey, userMessage, maxTokens = 2048) {
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${encodeURIComponent(apiKey)}`;
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: userMessage }] }],
+          generationConfig: { maxOutputTokens: maxTokens, temperature: 0.7 },
+        }),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        const msg = err.error?.message || `API error ${res.status}`;
+        // Surface the most actionable part of Gemini's verbose error
+        const short = msg.includes('quota') ? 'Quota exceeded — you may have hit the free tier limit (1500 req/day). Wait a minute and try again.' : msg;
+        throw new Error(short);
+      }
+      const data = await res.json();
+      return data.candidates[0].content.parts[0].text;
+    }
+
+    // Keep a single call alias so generateQuestions / evaluateAnswers don't change
+    const callClaude = callGemini;
+
+    async function extractPDFText(file) {
+      pdfjsLib.GlobalWorkerOptions.workerSrc =
+        'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+      const buf = await file.arrayBuffer();
+      const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
+      let text = '';
+      for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i);
+        const content = await page.getTextContent();
+        text += content.items.map(it => it.str).join(' ') + '\n\n';
+      }
+      return text.trim();
+    }
+
+    async function extractTxtText(file) {
+      return new Promise((res, rej) => {
+        const r = new FileReader();
+        r.onload = e => res(e.target.result);
+        r.onerror = rej;
+        r.readAsText(file);
+      });
+    }
+
+    function expLabel(p) {
+      if (p.userType === 'student') return 'Student (no work experience)';
+      if (p.userType === 'fresher') return 'Fresher (0–1 year experience)';
+      return `${p.yearsExp} year${Number(p.yearsExp) > 1 ? 's' : ''} of work experience`;
+    }
+
+    async function generateQuestions(apiKey, profile, cvText, jdText) {
+      const stageGuide = {
+        'HR Round': 'behavioral and situational questions (Tell me about yourself, strengths, weaknesses, motivation, culture fit, why this company)',
+        'Technical Round': 'role-specific technical questions based on skills and technologies in the JD and CV',
+        'Leadership Round': 'leadership philosophy, team management, conflict resolution, strategic thinking, and vision questions',
+        'Not yet scheduled': 'a balanced mix of behavioral, technical, and situational questions',
+      };
+      const prompt = `You are an expert interview coach for Indian students and young professionals.
+
+Generate exactly 5 personalized interview questions for this candidate.
+
+CANDIDATE PROFILE:
+- Name: ${profile.name}
+- Experience: ${expLabel(profile)}
+- Target Role: ${profile.targetRole}
+- Company Type: ${profile.companyType}
+- Interview Stage: ${profile.interviewStage}
+
+JOB DESCRIPTION:
+${jdText.slice(0, 2500)}
+
+CV / RESUME:
+${cvText.slice(0, 2500)}
+
+INSTRUCTIONS:
+- Generate ${stageGuide[profile.interviewStage] || stageGuide['Not yet scheduled']}
+- Tailor to experience level and role
+- Reference specific skills from JD/CV
+- Make each question test something different
+
+Return ONLY a valid JSON array — no markdown, no explanation:
+[{"id":1,"question":"...?","type":"behavioral","hint":"Tip: ..."}]`;
+
+      const text = await callClaude(apiKey, prompt, 2048);
+      const m = text.match(/\[[\s\S]*\]/);
+      if (!m) throw new Error('AI returned an unexpected format. Please try again.');
+      const qs = JSON.parse(m[0]);
+      if (!Array.isArray(qs) || qs.length === 0) throw new Error('No questions returned. Please try again.');
+      return qs;
+    }
+
+    async function evaluateAnswers(apiKey, questions, answers, profile, jdText, cvText) {
+      const transcript = questions
+        .map(q => `Q${q.id}: ${q.question}\nAnswer: ${answers[q.id] || '(No answer provided)'}`)
+        .join('\n\n');
+
+      const prompt = `You are an expert interview evaluator.
+
+CANDIDATE: ${profile.name} | Role: ${profile.targetRole} | Company Type: ${profile.companyType}
+STAGE: ${profile.interviewStage} | Experience: ${expLabel(profile)}
+
+JOB DESCRIPTION:
+${jdText.slice(0, 1500)}
+
+CV SUMMARY:
+${cvText.slice(0, 1500)}
+
+TRANSCRIPT:
+${transcript}
+
+Score each answer 0-10 on: relevance, examples, clarity, confidence.
+Provide:
+- overallScore (0-100)
+- jdMatchPercent (0-100): how well the profile matches the JD
+- 3 specific strengths from the interview
+- 3 actionable areas for improvement
+- overallFeedback: 2-3 encouraging but honest sentences
+
+Return ONLY valid JSON:
+{"overallScore":72,"jdMatchPercent":65,"questionFeedback":[{"questionId":1,"score":7,"scores":{"relevance":8,"examples":6,"clarity":7,"confidence":7},"feedback":"..."}],"strengths":["...","...","..."],"improvements":["...","...","..."],"overallFeedback":"..."}`;
+
+      const text = await callClaude(apiKey, prompt, 4096);
+      const m = text.match(/\{[\s\S]*\}/);
+      if (!m) throw new Error('Could not parse evaluation. Please try again.');
+      return JSON.parse(m[0]);
+    }
+
+
+    /* ═══════════════════════════════════════════════════
+       SHARED COMPONENTS
+    ═══════════════════════════════════════════════════ */
+
+    const STEP_LABELS = ['Profile','Job Description','Resume','Mode','Interview','Results'];
+
+    function StepHeader({ currentStep }) {
+      return (
+        <header style={{ padding: '20px 16px 12px' }}>
+          <div className="container">
+            {/* Logo */}
+            <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:20 }}>
+              <div style={{ width:36, height:36, borderRadius:10, background:'var(--orange)', display:'flex', alignItems:'center', justifyContent:'center', color:'#fff', fontWeight:900, fontSize:13 }}>TP</div>
+              <div>
+                <p style={{ fontWeight:900, fontSize:17, lineHeight:1, letterSpacing:'-.3px' }}>
+                  TALK <span style={{ color:'var(--orange)' }}>PRO</span>
+                </p>
+                <p style={{ color:'var(--muted)', fontSize:11, marginTop:2 }}>Interview Coach</p>
+              </div>
+            </div>
+            {/* Progress dots */}
+            {currentStep >= 1 && currentStep <= STEP_LABELS.length && (
+              <div style={{ display:'flex', alignItems:'flex-start' }}>
+                {STEP_LABELS.map((lbl, i) => {
+                  const n = i + 1;
+                  const st = currentStep > n ? 'done' : currentStep === n ? 'active' : 'pending';
+                  return (
+                    <React.Fragment key={lbl}>
+                      <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:3 }}>
+                        <div className={`step-dot ${st}`} />
+                        <span className={`step-label ${st}`} style={{ fontSize:9 }}>{lbl}</span>
+                      </div>
+                      {i < STEP_LABELS.length - 1 && (
+                        <div className={`step-line ${st}`} />
+                      )}
+                    </React.Fragment>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </header>
+      );
+    }
+
+    function LoadingOverlay({ message }) {
+      return (
+        <div style={{ position:'fixed', inset:0, zIndex:100, background:'rgba(10,22,40,.88)', backdropFilter:'blur(6px)', display:'flex', alignItems:'center', justifyContent:'center' }} className="anim-fade">
+          <div className="card" style={{ padding:36, maxWidth:340, width:'90%', textAlign:'center' }}>
+            <div style={{ position:'relative', width:60, height:60, margin:'0 auto 20px' }}>
+              <div style={{ position:'absolute', inset:0, border:'4px solid var(--border)', borderRadius:'50%' }} />
+              <div style={{ position:'absolute', inset:0, border:'4px solid transparent', borderTopColor:'var(--orange)', borderRadius:'50%' }} className="spinner" />
+              <div style={{ position:'absolute', inset:6, border:'3px solid transparent', borderTopColor:'var(--teal)', borderRadius:'50%', animationDirection:'reverse' }} className="spinner" />
+            </div>
+            <p style={{ fontWeight:700, fontSize:17, marginBottom:6 }}>{message || 'Processing...'}</p>
+            <p style={{ color:'var(--muted)', fontSize:13 }}>Powered by Gemini AI — just a moment</p>
+            <div style={{ display:'flex', justifyContent:'center', gap:6, marginTop:16 }}>
+              {[0,1,2].map(i => (
+                <div key={i} style={{ width:8, height:8, borderRadius:'50%', background:'var(--orange)', animation:`blink .8s ${i*.15}s ease-in-out infinite` }} />
+              ))}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+
+    /* ═══════════════════════════════════════════════════
+       STEP 0 · API KEY PROMPT
+    ═══════════════════════════════════════════════════ */
+
+    function ApiKeyPrompt({ onSubmit }) {
+      const [key, setKey] = useState('');
+      const [show, setShow] = useState(false);
+      const [err, setErr] = useState('');
+
+      function submit(e) {
+        e.preventDefault();
+        const k = key.trim();
+        if (!k.startsWith('AIza')) {
+          setErr('Gemini keys start with "AIza". Get yours free at aistudio.google.com/apikey');
+          return;
+        }
+        setErr('');
+        onSubmit(k);
+      }
+
+      return (
+        <div className="grid-bg anim-fade" style={{ minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:'32px 16px' }}>
+          {/* Logo */}
+          <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:36 }}>
+            <div className="glow-orange" style={{ width:52, height:52, borderRadius:16, background:'var(--orange)', display:'flex', alignItems:'center', justifyContent:'center', color:'#fff', fontWeight:900, fontSize:18 }}>TP</div>
+            <div>
+              <p style={{ fontWeight:900, fontSize:26, lineHeight:1, letterSpacing:'-.5px' }}>
+                TALK <span style={{ color:'var(--orange)' }}>PRO</span>
+              </p>
+              <p style={{ color:'var(--muted)', fontSize:13, marginTop:3 }}>with Aman · Interview Coach</p>
+            </div>
+          </div>
+
+          <div className="card anim-up" style={{ width:'100%', maxWidth:440, padding:32 }}>
+            {/* Headline */}
+            <div style={{ textAlign:'center', marginBottom:28 }}>
+              <div className="badge badge-orange" style={{ marginBottom:14 }}>
+                <span style={{ width:6, height:6, borderRadius:'50%', background:'var(--orange)', animation:'blink 1.2s infinite' }} />
+                AI-Powered Mock Interviews
+              </div>
+              <h1 style={{ fontSize:23, fontWeight:800, lineHeight:1.2, marginBottom:10 }}>
+                Ace Your Next Interview
+              </h1>
+              <p style={{ color:'var(--muted)', fontSize:14, lineHeight:1.65 }}>
+                Get personalised questions from your CV &amp; JD, then receive instant AI feedback on every answer.
+              </p>
+            </div>
+
+            {/* Feature chips */}
+            <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:10, marginBottom:28 }}>
+              {[
+                { icon:'🎯', label:'Role-specific\nQuestions' },
+                { icon:'⏱️', label:'Timed\nPractice' },
+                { icon:'📊', label:'Instant\nScorecard' },
+              ].map(({ icon, label }) => (
+                <div key={label} style={{ background:'var(--navy)', border:'1px solid var(--border)', borderRadius:14, padding:'14px 8px', textAlign:'center' }}>
+                  <div style={{ fontSize:24, marginBottom:6 }}>{icon}</div>
+                  <p style={{ color:'var(--muted)', fontSize:11, lineHeight:1.4, whiteSpace:'pre-line' }}>{label}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* API Key form */}
+            <form onSubmit={submit}>
+              <label className="label">Gemini API Key <span style={{ color:'var(--orange)' }}>*</span></label>
+              <div style={{ position:'relative', marginBottom:6 }}>
+                <input
+                  type={show ? 'text' : 'password'}
+                  value={key}
+                  onChange={e => { setKey(e.target.value); setErr(''); }}
+                  placeholder="AIzaSy..."
+                  className="input input-password mono"
+                  autoComplete="off"
+                  spellCheck="false"
+                  style={{ fontSize:13 }}
+                />
+                <button type="button" onClick={() => setShow(v => !v)}
+                  style={{ position:'absolute', right:12, top:'50%', transform:'translateY(-50%)', background:'none', border:'none', cursor:'pointer', fontSize:18, color:'var(--muted)' }}>
+                  {show ? '🙈' : '👁️'}
+                </button>
+              </div>
+              {err && <p style={{ color:'#f87171', fontSize:12, marginBottom:8 }}>⚠️ {err}</p>}
+              <p style={{ color:'var(--muted)', fontSize:12, marginBottom:20, lineHeight:1.5 }}>
+                Your key stays in this browser tab only — never stored.{' '}
+                <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer" style={{ color:'var(--orange)' }}>Get a free key →</a>
+              </p>
+              <button type="submit" disabled={!key.trim()} className="btn btn-primary btn-full">
+                Start Interview Prep →
+              </button>
+            </form>
+          </div>
+
+          <p style={{ color:'var(--border)', fontSize:12, marginTop:20, textAlign:'center' }}>
+            Built for students &amp; freshers in India · Powered by Google Gemini
+          </p>
+        </div>
+      );
+    }
+
+
+    /* ═══════════════════════════════════════════════════
+       STEP 1 · ONBOARDING FORM
+    ═══════════════════════════════════════════════════ */
+
+    const USER_TYPES = [
+      { value:'student',     label:'Student',     desc:'Still in college / school', icon:'🎓' },
+      { value:'fresher',     label:'Fresher',     desc:'0–1 year of experience',    icon:'🌱' },
+      { value:'experienced', label:'Working',     desc:'Has work experience',        icon:'💼' },
+    ];
+    const COMPANY_TYPES   = ['Startup', 'MNC', 'Government / PSU', 'Product Company', 'Agency / Consultancy'];
+    const INTERVIEW_STAGES = ['HR Round', 'Technical Round', 'Leadership Round', 'Not yet scheduled'];
+
+    function OnboardingForm({ onSubmit }) {
+      const [f, setF] = useState({ name:'', email:'', userType:'', yearsExp:'', targetRole:'', companyType:'', interviewStage:'' });
+      const [errs, setErrs] = useState({});
+
+      function set(k, v) { setF(p => ({ ...p, [k]: v })); setErrs(e => ({ ...e, [k]: '' })); }
+
+      function validate() {
+        const e = {};
+        if (!f.name.trim()) e.name = 'Please enter your name';
+        if (!f.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email)) e.email = 'Enter a valid email';
+        if (!f.userType) e.userType = 'Please select your level';
+        if (f.userType === 'experienced' && !f.yearsExp) e.yearsExp = 'Enter years of experience';
+        if (!f.targetRole.trim()) e.targetRole = 'Enter your target role';
+        if (!f.companyType) e.companyType = 'Select a company type';
+        if (!f.interviewStage) e.interviewStage = 'Select an interview stage';
+        return e;
+      }
+
+      function submit(e) {
+        e.preventDefault();
+        const errs = validate();
+        if (Object.keys(errs).length) { setErrs(errs); return; }
+        onSubmit(f);
+      }
+
+      return (
+        <div className="grid-bg anim-fade" style={{ minHeight:'100vh', paddingBottom:48 }}>
+          <StepHeader currentStep={1} />
+          <div className="container">
+            <div style={{ marginBottom:28 }}>
+              <h2 style={{ fontSize:22, fontWeight:800 }}>Tell us about yourself</h2>
+              <p style={{ color:'var(--muted)', fontSize:14, marginTop:4 }}>We'll use this to personalise your interview questions.</p>
+            </div>
+            <form onSubmit={submit}>
+              {/* Name + Email */}
+              <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:14, marginBottom:22 }}>
+                <div>
+                  <label className="label">Full Name</label>
+                  <input className="input" type="text" value={f.name} onChange={e => set('name', e.target.value)} placeholder="e.g. Priya Sharma" />
+                  {errs.name && <p style={{ color:'#f87171', fontSize:12, marginTop:4 }}>{errs.name}</p>}
+                </div>
+                <div>
+                  <label className="label">Email ID</label>
+                  <input className="input" type="email" value={f.email} onChange={e => set('email', e.target.value)} placeholder="priya@email.com" />
+                  {errs.email && <p style={{ color:'#f87171', fontSize:12, marginTop:4 }}>{errs.email}</p>}
+                </div>
+              </div>
+
+              {/* Experience level */}
+              <div style={{ marginBottom:22 }}>
+                <label className="label">Experience Level</label>
+                <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:10 }}>
+                  {USER_TYPES.map(({ value, label, desc, icon }) => (
+                    <button key={value} type="button" onClick={() => set('userType', value)}
+                      style={{
+                        background: f.userType === value ? 'rgba(255,107,53,.1)' : 'var(--card)',
+                        border: `1.5px solid ${f.userType === value ? 'var(--orange)' : 'var(--border)'}`,
+                        borderRadius:16, padding:'14px 10px', textAlign:'left', cursor:'pointer',
+                        boxShadow: f.userType === value ? '0 0 18px rgba(255,107,53,.2)' : 'none',
+                        transition: 'all .18s',
+                      }}>
+                      <div style={{ fontSize:24, marginBottom:8 }}>{icon}</div>
+                      <p style={{ fontWeight:600, fontSize:13, color: f.userType === value ? 'var(--orange)' : 'var(--text)' }}>{label}</p>
+                      <p style={{ color:'var(--muted)', fontSize:11, marginTop:2 }}>{desc}</p>
+                    </button>
+                  ))}
+                </div>
+                {errs.userType && <p style={{ color:'#f87171', fontSize:12, marginTop:4 }}>{errs.userType}</p>}
+              </div>
+
+              {/* Years of exp — conditional */}
+              {f.userType === 'experienced' && (
+                <div style={{ marginBottom:22 }} className="anim-up">
+                  <label className="label">Years of Work Experience</label>
+                  <input className="input" type="number" min="1" max="40" value={f.yearsExp} onChange={e => set('yearsExp', e.target.value)} placeholder="e.g. 3" style={{ maxWidth:160 }} />
+                  {errs.yearsExp && <p style={{ color:'#f87171', fontSize:12, marginTop:4 }}>{errs.yearsExp}</p>}
+                </div>
+              )}
+
+              {/* Target role */}
+              <div style={{ marginBottom:22 }}>
+                <label className="label">Target Role</label>
+                <input className="input" type="text" value={f.targetRole} onChange={e => set('targetRole', e.target.value)} placeholder="e.g. Marketing Executive, Software Developer, Data Analyst" />
+                {errs.targetRole && <p style={{ color:'#f87171', fontSize:12, marginTop:4 }}>{errs.targetRole}</p>}
+              </div>
+
+              {/* Company type */}
+              <div style={{ marginBottom:22 }}>
+                <label className="label">Target Company Type</label>
+                <div style={{ display:'flex', flexWrap:'wrap', gap:8 }}>
+                  {COMPANY_TYPES.map(t => (
+                    <button key={t} type="button" onClick={() => set('companyType', t)}
+                      className={`chip ${f.companyType === t ? 'active' : ''}`}>{t}</button>
+                  ))}
+                </div>
+                {errs.companyType && <p style={{ color:'#f87171', fontSize:12, marginTop:4 }}>{errs.companyType}</p>}
+              </div>
+
+              {/* Interview stage */}
+              <div style={{ marginBottom:28 }}>
+                <label className="label">Interview Stage</label>
+                <div style={{ display:'grid', gridTemplateColumns:'repeat(2,1fr)', gap:8 }}>
+                  {INTERVIEW_STAGES.map(s => (
+                    <button key={s} type="button" onClick={() => set('interviewStage', s)}
+                      className={`chip chip-teal ${f.interviewStage === s ? 'active' : ''}`}
+                      style={{ borderRadius:12, padding:'11px 16px', textAlign:'center' }}>{s}</button>
+                  ))}
+                </div>
+                {errs.interviewStage && <p style={{ color:'#f87171', fontSize:12, marginTop:4 }}>{errs.interviewStage}</p>}
+              </div>
+
+              <button type="submit" className="btn btn-primary btn-full">
+                Continue — Add Job Description →
+              </button>
+            </form>
+          </div>
+        </div>
+      );
+    }
+
+
+    /* ═══════════════════════════════════════════════════
+       STEP 2 · JD UPLOAD
+    ═══════════════════════════════════════════════════ */
+
+    function JDUpload({ onSubmit }) {
+      const [tab, setTab] = useState('paste');
+      const [text, setText] = useState('');
+      const [fileName, setFileName] = useState('');
+      const [loading, setLoading] = useState(false);
+      const [err, setErr] = useState('');
+      const [dragging, setDragging] = useState(false);
+      const fileRef = useRef();
+
+      async function processFile(file) {
+        if (!file) return;
+        const ext = file.name.split('.').pop().toLowerCase();
+        if (!['pdf','txt'].includes(ext)) { setErr('Please upload a .pdf or .txt file'); return; }
+        setLoading(true); setErr('');
+        try {
+          const extracted = ext === 'pdf' ? await extractPDFText(file) : await extractTxtText(file);
+          setText(extracted); setFileName(file.name);
+        } catch { setErr('Could not read the file. Please paste the JD text instead.'); }
+        finally { setLoading(false); }
+      }
+
+      function handleDrop(e) { e.preventDefault(); setDragging(false); processFile(e.dataTransfer.files[0]); }
+
+      function submit(e) {
+        e.preventDefault();
+        if (!text.trim() || text.trim().length < 40) { setErr('Please add the job description (at least 40 characters).'); return; }
+        onSubmit(text.trim());
+      }
+
+      return (
+        <div className="grid-bg anim-fade" style={{ minHeight:'100vh', paddingBottom:48 }}>
+          <StepHeader currentStep={2} />
+          <div className="container">
+            <div style={{ marginBottom:28 }}>
+              <h2 style={{ fontSize:22, fontWeight:800 }}>Add the Job Description</h2>
+              <p style={{ color:'var(--muted)', fontSize:14, marginTop:4 }}>The more detail, the better your personalised questions will be.</p>
+            </div>
+            <form onSubmit={submit}>
+              {/* Tabs */}
+              <div style={{ display:'flex', gap:4, padding:4, background:'var(--navy)', borderRadius:14, border:'1px solid var(--border)', width:'fit-content', marginBottom:18 }}>
+                {[{id:'paste',icon:'✏️',label:'Paste Text'},{id:'file',icon:'📄',label:'Upload File'}].map(({ id, icon, label }) => (
+                  <button key={id} type="button" onClick={() => { setTab(id); setErr(''); }}
+                    style={{ padding:'8px 18px', borderRadius:10, fontSize:13, fontWeight:500, border:'none', cursor:'pointer', fontFamily:'inherit',
+                      background: tab === id ? 'var(--card)' : 'transparent',
+                      color: tab === id ? 'var(--text)' : 'var(--muted)',
+                      boxShadow: tab === id ? '0 1px 3px rgba(0,0,0,.3)' : 'none',
+                    }}>
+                    {icon} {label}
+                  </button>
+                ))}
+              </div>
+
+              {tab === 'paste' && (
+                <div className="anim-fade">
+                  <textarea className="input" value={text} onChange={e => { setText(e.target.value); setErr(''); }}
+                    placeholder={"Paste the full job description here...\n\nExample:\nWe are looking for a Marketing Executive with experience in digital marketing, content creation, and social media management..."}
+                    style={{ minHeight:240, fontSize:14 }} />
+                  <p style={{ color:'var(--muted)', fontSize:12, marginTop:4 }}>{text.length} characters</p>
+                </div>
+              )}
+
+              {tab === 'file' && (
+                <div className="anim-fade">
+                  <div
+                    className={`card ${dragging ? 'drag-over' : ''}`}
+                    style={{ padding:40, textAlign:'center', cursor:'pointer', border:'2px dashed var(--border)', transition:'all .2s' }}
+                    onClick={() => !fileName && fileRef.current?.click()}
+                    onDrop={handleDrop}
+                    onDragOver={e => { e.preventDefault(); setDragging(true); }}
+                    onDragLeave={() => setDragging(false)}>
+                    {loading ? (
+                      <div>
+                        <div className="spinner" style={{ width:36, height:36, border:'4px solid var(--border)', borderTopColor:'var(--orange)', borderRadius:'50%', margin:'0 auto 12px' }} />
+                        <p style={{ color:'var(--muted)', fontSize:14 }}>Extracting text...</p>
+                      </div>
+                    ) : fileName ? (
+                      <div>
+                        <div style={{ fontSize:36, marginBottom:8 }}>📄</div>
+                        <p style={{ fontWeight:600, marginBottom:4 }}>{fileName}</p>
+                        <p style={{ color:'var(--teal)', fontSize:13, marginBottom:10 }}>✓ {text.length} characters extracted</p>
+                        <button type="button" onClick={e => { e.stopPropagation(); setFileName(''); setText(''); }}
+                          style={{ color:'var(--muted)', fontSize:12, background:'none', border:'none', cursor:'pointer', textDecoration:'underline' }}>
+                          Remove file
+                        </button>
+                      </div>
+                    ) : (
+                      <div>
+                        <div style={{ fontSize:40, marginBottom:10 }}>📁</div>
+                        <p style={{ fontWeight:600, marginBottom:4 }}>Drop your JD file here</p>
+                        <p style={{ color:'var(--muted)', fontSize:13 }}>or click to browse · Supports .pdf and .txt</p>
+                      </div>
+                    )}
+                  </div>
+                  <input ref={fileRef} type="file" accept=".pdf,.txt" style={{ display:'none' }} onChange={e => processFile(e.target.files[0])} />
+                </div>
+              )}
+
+              {err && <p style={{ color:'#f87171', fontSize:13, marginTop:10 }}>⚠️ {err}</p>}
+
+              <button type="submit" disabled={!text.trim() || text.trim().length < 40} className="btn btn-primary btn-full" style={{ marginTop:22 }}>
+                Continue — Upload Resume →
+              </button>
+            </form>
+          </div>
+        </div>
+      );
+    }
+
+
+    /* ═══════════════════════════════════════════════════
+       STEP 3 · CV UPLOAD
+    ═══════════════════════════════════════════════════ */
+
+    function CVUpload({ onSubmit }) {
+      const [cvText, setCvText] = useState('');
+      const [fileName, setFileName] = useState('');
+      const [loading, setLoading] = useState(false);
+      const [err, setErr] = useState('');
+      const [dragging, setDragging] = useState(false);
+      const [preview, setPreview] = useState(false);
+      const fileRef = useRef();
+
+      async function processFile(file) {
+        if (!file) return;
+        if (file.name.split('.').pop().toLowerCase() !== 'pdf') { setErr('Please upload a PDF file (.pdf)'); return; }
+        setLoading(true); setErr('');
+        try {
+          const txt = await extractPDFText(file);
+          if (!txt || txt.length < 50) throw new Error('Could not extract enough text. The PDF may be image-based or scanned.');
+          setCvText(txt); setFileName(file.name);
+        } catch (e) { setErr(e.message || 'Could not read PDF. Please paste your CV text below.'); }
+        finally { setLoading(false); }
+      }
+
+      function handleDrop(e) { e.preventDefault(); setDragging(false); processFile(e.dataTransfer.files[0]); }
+
+      function submit(e) {
+        e.preventDefault();
+        if (!cvText.trim() || cvText.trim().length < 40) { setErr('Please upload your resume or paste its content.'); return; }
+        onSubmit(cvText.trim());
+      }
+
+      return (
+        <div className="grid-bg anim-fade" style={{ minHeight:'100vh', paddingBottom:48 }}>
+          <StepHeader currentStep={3} />
+          <div className="container">
+            <div style={{ marginBottom:28 }}>
+              <h2 style={{ fontSize:22, fontWeight:800 }}>Upload Your Resume</h2>
+              <p style={{ color:'var(--muted)', fontSize:14, marginTop:4 }}>We'll extract your skills &amp; experience to craft personalised questions.</p>
+            </div>
+            <form onSubmit={submit}>
+              {/* Drop zone */}
+              <div
+                className={`card ${dragging ? 'drag-over' : ''}`}
+                style={{
+                  padding:48, textAlign:'center', cursor: fileName ? 'default' : 'pointer',
+                  border: `2px dashed ${fileName ? 'var(--teal)' : 'var(--border)'}`,
+                  background: fileName ? 'rgba(0,196,154,.04)' : 'var(--card)',
+                  transition: 'all .2s', marginBottom:16,
+                }}
+                onClick={() => !fileName && fileRef.current?.click()}
+                onDrop={handleDrop}
+                onDragOver={e => { e.preventDefault(); setDragging(true); }}
+                onDragLeave={() => setDragging(false)}>
+                {loading ? (
+                  <div>
+                    <div style={{ position:'relative', width:52, height:52, margin:'0 auto 14px' }}>
+                      <div style={{ position:'absolute', inset:0, border:'4px solid var(--border)', borderRadius:'50%' }} />
+                      <div style={{ position:'absolute', inset:0, border:'4px solid transparent', borderTopColor:'var(--orange)', borderRadius:'50%' }} className="spinner" />
+                    </div>
+                    <p style={{ fontWeight:600, marginBottom:4 }}>Reading your resume...</p>
+                    <p style={{ color:'var(--muted)', fontSize:13 }}>Extracting text from PDF</p>
+                  </div>
+                ) : fileName ? (
+                  <div>
+                    <div className="glow-teal" style={{ width:56, height:56, borderRadius:16, background:'rgba(0,196,154,.15)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:28, margin:'0 auto 12px' }}>📋</div>
+                    <p style={{ fontWeight:600, fontSize:15, marginBottom:4 }}>{fileName}</p>
+                    <p style={{ color:'var(--teal)', fontSize:13, marginBottom:12 }}>✓ {cvText.length.toLocaleString()} characters extracted</p>
+                    <div style={{ display:'flex', gap:12, justifyContent:'center' }}>
+                      <button type="button" onClick={e => { e.stopPropagation(); setPreview(v => !v); }}
+                        style={{ color:'var(--muted)', fontSize:12, background:'none', border:'none', cursor:'pointer', textDecoration:'underline' }}>
+                        {preview ? 'Hide' : 'Preview'} text
+                      </button>
+                      <button type="button" onClick={e => { e.stopPropagation(); setFileName(''); setCvText(''); setPreview(false); }}
+                        style={{ color:'var(--muted)', fontSize:12, background:'none', border:'none', cursor:'pointer' }}>
+                        Remove ×
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <div style={{ width:60, height:60, borderRadius:18, background:'rgba(255,107,53,.1)', border:'1px solid rgba(255,107,53,.25)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:30, margin:'0 auto 14px' }}>📄</div>
+                    <p style={{ fontWeight:700, fontSize:17, marginBottom:6 }}>Drop your resume here</p>
+                    <p style={{ color:'var(--muted)', fontSize:14, marginBottom:12 }}>or click to browse</p>
+                    <span className="badge badge-orange">PDF only · Max 10MB</span>
+                  </div>
+                )}
+              </div>
+              <input ref={fileRef} type="file" accept=".pdf" style={{ display:'none' }} onChange={e => processFile(e.target.files[0])} />
+
+              {/* Preview */}
+              {preview && cvText && (
+                <div className="card anim-up" style={{ padding:16, marginBottom:16 }}>
+                  <p style={{ color:'var(--muted)', fontSize:11, fontWeight:600, textTransform:'uppercase', letterSpacing:'.06em', marginBottom:8 }}>Extracted Preview</p>
+                  <pre style={{ color:'var(--text)', fontSize:12, lineHeight:1.6, whiteSpace:'pre-wrap', maxHeight:180, overflow:'auto' }}>
+                    {cvText.slice(0, 1200)}{cvText.length > 1200 ? '\n\n...(truncated)' : ''}
+                  </pre>
+                </div>
+              )}
+
+              {/* Paste fallback */}
+              {!fileName && (
+                <div style={{ marginBottom:16 }}>
+                  <p style={{ color:'var(--muted)', fontSize:12, textAlign:'center', marginBottom:8 }}>Can't upload PDF? Paste your resume text:</p>
+                  <textarea className="input" value={cvText} onChange={e => { setCvText(e.target.value); setErr(''); }}
+                    placeholder="Paste your CV / resume text here..."
+                    style={{ minHeight:130, fontSize:13 }} />
+                </div>
+              )}
+
+              {err && <p style={{ color:'#f87171', fontSize:13, marginBottom:12 }}>⚠️ {err}</p>}
+
+              <button type="submit" disabled={!cvText.trim() || cvText.trim().length < 40} className="btn btn-primary btn-full">
+                Continue — Choose Interview Mode →
+              </button>
+            </form>
+          </div>
+        </div>
+      );
+    }
+
+
+    /* ═══════════════════════════════════════════════════
+       STEP 4 · MODE SELECT
+    ═══════════════════════════════════════════════════ */
+
+    const MODES = [
+      {
+        id:'free', price:'₹0', label:'Free Practice', questions:5, time:'5 min',
+        icon:'🎯', available:true, badgeLabel:'Start Here',
+        features:['5 AI-personalised questions','Based on your CV + JD','60 sec/question timer','Instant scorecard & feedback'],
+      },
+      {
+        id:'standard', price:'₹49', label:'Standard Mock', questions:10, time:'15 min',
+        icon:'⚡', available:false, badgeLabel:'Coming Soon',
+        features:['10 deeper questions','Follow-up questions','STAR method coaching','Detailed improvement plan'],
+      },
+      {
+        id:'full', price:'₹99', label:'Full Mock Interview', questions:'15+', time:'30 min',
+        icon:'🏆', available:false, badgeLabel:'Coming Soon',
+        features:['Complete mock interview','Behavioral + Technical','Personalised STAR plan','PDF feedback report'],
+      },
+    ];
+
+    function ModeSelect({ profile, onContinue }) {
+      return (
+        <div className="grid-bg anim-fade" style={{ minHeight:'100vh', paddingBottom:48 }}>
+          <StepHeader currentStep={4} />
+          <div className="container-md">
+            <div style={{ marginBottom:28 }}>
+              <p style={{ color:'var(--muted)', fontSize:13, marginBottom:4 }}>Almost there, {profile?.name?.split(' ')[0]} 👋</p>
+              <h2 style={{ fontSize:22, fontWeight:800 }}>Choose Your Interview Mode</h2>
+              <p style={{ color:'var(--muted)', fontSize:14, marginTop:4 }}>Start free — upgrade for a deeper mock interview experience.</p>
+            </div>
+
+            <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(220px, 1fr))', gap:16, marginBottom:28 }}>
+              {MODES.map(mode => (
+                <div key={mode.id}
+                  style={{
+                    background: 'var(--card)',
+                    border: `1.5px solid ${mode.available ? 'var(--orange)' : 'var(--border)'}`,
+                    borderRadius:20, padding:24, display:'flex', flexDirection:'column',
+                    opacity: mode.available ? 1 : .6,
+                    boxShadow: mode.available ? '0 0 28px rgba(255,107,53,.18)' : 'none',
+                    position:'relative',
+                  }}>
+                  {/* Start Here badge */}
+                  {mode.available && (
+                    <div style={{ position:'absolute', top:-13, left:'50%', transform:'translateX(-50%)', background:'var(--orange)', color:'#fff', fontSize:11, fontWeight:800, textTransform:'uppercase', letterSpacing:'.06em', padding:'4px 14px', borderRadius:99 }}>
+                      Start Here
+                    </div>
+                  )}
+
+                  <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:14 }}>
+                    <span className={`badge ${mode.available ? 'badge-orange' : 'badge-gray'}`}>{mode.badgeLabel}</span>
+                    <span style={{ fontSize:24 }}>{mode.icon}</span>
+                  </div>
+
+                  <div style={{ marginBottom:4 }}>
+                    <span style={{ fontSize:32, fontWeight:900, color: mode.available ? 'var(--orange)' : 'var(--muted)' }}>{mode.price}</span>
+                  </div>
+                  <h3 style={{ fontWeight:800, fontSize:17, marginBottom:4 }}>{mode.label}</h3>
+                  <p style={{ color:'var(--muted)', fontSize:13, marginBottom:18 }}>{mode.questions} questions · {mode.time}</p>
+
+                  <ul style={{ flex:1, marginBottom:20, display:'flex', flexDirection:'column', gap:8 }}>
+                    {mode.features.map(f => (
+                      <li key={f} style={{ display:'flex', alignItems:'flex-start', gap:8, fontSize:13 }}>
+                        <span style={{ color: mode.available ? 'var(--teal)' : 'var(--border)', marginTop:1 }}>{mode.available ? '✓' : '○'}</span>
+                        <span style={{ color: mode.available ? 'var(--text)' : 'var(--muted)' }}>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {mode.available ? (
+                    <button onClick={onContinue} className="btn btn-primary btn-full glow-orange">
+                      Start Free Mock →
+                    </button>
+                  ) : (
+                    <button disabled className="btn btn-secondary btn-full" style={{ cursor:'not-allowed' }}>
+                      Coming Soon
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* What happens */}
+            <div className="card" style={{ padding:22 }}>
+              <p style={{ color:'var(--muted)', fontSize:11, fontWeight:700, textTransform:'uppercase', letterSpacing:'.06em', marginBottom:16 }}>What Happens Next</p>
+              <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:16, textAlign:'center' }}>
+                {[
+                  { icon:'🤖', title:'AI Generates Questions', desc:'Gemini analyses your CV + JD to create 5 personalised questions' },
+                  { icon:'⏱️', title:'You Answer Each One', desc:'60 seconds per question — type your best answer' },
+                  { icon:'📊', title:'Instant Scorecard', desc:'Get a score, feedback, strengths & improvements' },
+                ].map(({ icon, title, desc }) => (
+                  <div key={title}>
+                    <div style={{ fontSize:28, marginBottom:8 }}>{icon}</div>
+                    <p style={{ fontWeight:600, fontSize:12, marginBottom:4 }}>{title}</p>
+                    <p style={{ color:'var(--muted)', fontSize:11, lineHeight:1.5 }}>{desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+
+    /* ═══════════════════════════════════════════════════
+       STEP 5 · INTERVIEW SCREEN
+    ═══════════════════════════════════════════════════ */
+
+    const Q_TIME = 60;
+
+    function Timer({ timeLeft }) {
+      const pct = (timeLeft / Q_TIME) * 100;
+      const warn = timeLeft <= 10;
+      const crit = timeLeft <= 5;
+      const r = 24;
+      const circ = 2 * Math.PI * r;
+      const strokeColor = crit ? '#ef4444' : warn ? '#f97316' : 'var(--teal)';
+      return (
+        <div style={{ display:'flex', alignItems:'center', gap:12 }} className={crit || warn ? 'blink' : ''}>
+          <div style={{ position:'relative', width:52, height:52, flexShrink:0 }}>
+            <svg style={{ width:'100%', height:'100%', transform:'rotate(-90deg)' }} viewBox="0 0 52 52">
+              <circle cx="26" cy="26" r={r} fill="none" stroke="var(--border)" strokeWidth="4" />
+              <circle cx="26" cy="26" r={r} fill="none" stroke={strokeColor} strokeWidth="4"
+                strokeLinecap="round"
+                strokeDasharray={circ}
+                strokeDashoffset={circ * (1 - pct / 100)}
+                style={{ transition:'stroke-dashoffset 1s linear, stroke .3s' }} />
+            </svg>
+            <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', fontSize:13, fontWeight:800, color:strokeColor }}>
+              {timeLeft}
+            </div>
+          </div>
+          <div>
+            <p style={{ fontSize:11, fontWeight:600, color: crit ? '#ef4444' : warn ? '#f97316' : 'var(--muted)' }}>
+              {crit ? '⚡ Wrap it up!' : warn ? '⏳ Almost out of time' : 'Time remaining'}
+            </p>
+            <p style={{ fontSize:13, fontWeight:600 }}>{timeLeft}s</p>
+          </div>
+        </div>
+      );
+    }
+
+    function InterviewScreen({ questions, profile, onComplete }) {
+      const [current, setCurrent] = useState(0);
+      const [answers, setAnswers] = useState({});
+      const [timeLeft, setTimeLeft] = useState(Q_TIME);
+      const onCompleteRef = useRef(onComplete);
+      onCompleteRef.current = onComplete;
+
+      const q = questions[current];
+      const answer = answers[q?.id] || '';
+      const isLast = current === questions.length - 1;
+      const progress = (current / questions.length) * 100;
+
+      // Reset timer on question change
+      useEffect(() => { setTimeLeft(Q_TIME); }, [current]);
+
+      // Tick down
+      useEffect(() => {
+        if (timeLeft <= 0) return;
+        const t = setTimeout(() => setTimeLeft(s => s - 1), 1000);
+        return () => clearTimeout(t);
+      }, [timeLeft]);
+
+      function advance() {
+        if (isLast) onCompleteRef.current({ ...answers });
+        else setCurrent(c => c + 1);
+      }
+
+      return (
+        <div className="anim-fade" style={{ minHeight:'100vh', display:'flex', flexDirection:'column', background:'var(--navy)' }}>
+          {/* Sticky top bar */}
+          <div style={{ position:'sticky', top:0, zIndex:10, background:'rgba(10,22,40,.9)', backdropFilter:'blur(8px)', borderBottom:'1px solid var(--border)', padding:'14px 16px' }}>
+            <div className="container">
+              <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:10 }}>
+                <div style={{ display:'flex', alignItems:'center', gap:8 }}>
+                  <div style={{ width:28, height:28, borderRadius:8, background:'var(--orange)', display:'flex', alignItems:'center', justifyContent:'center', color:'#fff', fontWeight:900, fontSize:11 }}>TP</div>
+                  <span style={{ fontWeight:700, fontSize:14 }}>Mock Interview</span>
+                </div>
+                <div style={{ display:'flex', alignItems:'center', gap:6, fontSize:12, color:'var(--muted)' }}>
+                  <span style={{ width:7, height:7, borderRadius:'50%', background:'#ef4444', display:'inline-block', animation:'blink 1.2s infinite' }} />
+                  Live Session
+                </div>
+              </div>
+              <div style={{ display:'flex', alignItems:'center', gap:12 }}>
+                <div className="progress-track" style={{ flex:1 }}>
+                  <div className="progress-fill" style={{ width:`${progress}%` }} />
+                </div>
+                <span style={{ fontSize:12, fontWeight:700, whiteSpace:'nowrap' }}>Q{current+1} / {questions.length}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Content */}
+          <div className="container" style={{ flex:1, display:'flex', flexDirection:'column', paddingTop:28, paddingBottom:20 }}>
+            {/* Question card */}
+            <div className="card anim-up" style={{ padding:24, marginBottom:18 }} key={current}>
+              <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:16 }}>
+                <span className="badge badge-orange">Question {current+1}</span>
+                {q?.type && <span className="badge badge-gray" style={{ textTransform:'capitalize' }}>{q.type}</span>}
+              </div>
+              <p style={{ fontSize:18, fontWeight:700, lineHeight:1.5, marginBottom:20 }}>{q?.question}</p>
+              <Timer timeLeft={timeLeft} />
+            </div>
+
+            {/* Hint */}
+            {q?.hint && (
+              <div style={{ display:'flex', alignItems:'flex-start', gap:8, marginBottom:14, padding:'0 2px' }} className="anim-fade">
+                <span style={{ color:'var(--teal)', marginTop:2 }}>💡</span>
+                <p style={{ color:'var(--muted)', fontSize:13, lineHeight:1.6 }}>
+                  <span style={{ color:'var(--teal)', fontWeight:600 }}>Tip: </span>{q.hint}
+                </p>
+              </div>
+            )}
+
+            {/* Answer textarea */}
+            <textarea
+              className="input anim-up"
+              value={answer}
+              onChange={e => setAnswers(p => ({ ...p, [q.id]: e.target.value }))}
+              placeholder={"Start typing your answer here. Be specific — use real examples from your experience.\n\nFor example: 'During my internship at XYZ, I was responsible for...' or 'In my final year project, I led a team of 4 to build...'"}
+              style={{ flex:1, minHeight:200, fontSize:14, lineHeight:1.65, marginBottom:14 }}
+              autoFocus
+            />
+            <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:18 }}>
+              <span style={{ color:'var(--muted)', fontSize:12 }}>{answer.length} characters</span>
+              {answer.length > 0 && answer.length < 60 && (
+                <span style={{ color:'var(--orange)', fontSize:12 }}>Add more detail for a better score</span>
+              )}
+            </div>
+
+            <button onClick={advance} className={`btn btn-primary btn-full ${isLast ? 'glow-orange' : ''}`} style={{ fontSize:15 }}>
+              {isLast ? '🏁  Submit & See Results' : 'Next Question →'}
+            </button>
+          </div>
+
+          {/* Question dots */}
+          <div style={{ display:'flex', justifyContent:'center', gap:8, paddingBottom:20 }}>
+            {questions.map((_, i) => (
+              <div key={i} style={{
+                borderRadius:99, height:7, transition:'all .3s',
+                width: i === current ? 20 : 7,
+                background: i === current ? 'var(--orange)' : (answers[questions[i]?.id] ? 'var(--teal)' : 'var(--border)'),
+              }} />
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+
+    /* ═══════════════════════════════════════════════════
+       STEP 6 · SCORECARD
+    ═══════════════════════════════════════════════════ */
+
+    function ScoreCircle({ score }) {
+      const RADIUS = 54;
+      const CIRC = 2 * Math.PI * RADIUS; // 339.29
+      const targetOffset = CIRC * (1 - score / 100);
+      const col = score >= 75 ? 'var(--teal)' : score >= 50 ? 'var(--orange)' : '#ef4444';
+      return (
+        <div style={{ position:'relative', width:144, height:144, margin:'0 auto' }}>
+          <div className="pulse-ring" style={{ border:`3px solid ${col}`, opacity:.3 }} />
+          <svg style={{ width:'100%', height:'100%' }} viewBox="0 0 120 120">
+            <circle cx="60" cy="60" r={RADIUS} fill="none" stroke="var(--border)" strokeWidth="8" />
+            <circle className="score-arc" cx="60" cy="60" r={RADIUS} fill="none"
+              stroke={col} strokeWidth="8" strokeLinecap="round"
+              style={{ '--target-offset': `${targetOffset}px` }} />
+          </svg>
+          <div style={{ position:'absolute', inset:0, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center' }}>
+            <span style={{ fontSize:34, fontWeight:900 }}>{score}</span>
+            <span style={{ color:'var(--muted)', fontSize:12, fontWeight:500 }}>/ 100</span>
+          </div>
+        </div>
+      );
+    }
+
+    function Scorecard({ results, profile, questions, answers, onRestart }) {
+      const [expanded, setExpanded] = useState(null);
+      if (!results) return null;
+
+      const { overallScore=0, jdMatchPercent=0, questionFeedback=[], strengths=[], improvements=[], overallFeedback='' } = results;
+
+      const grade =
+        overallScore >= 85 ? { label:'Excellent 🔥',    col:'var(--teal)',  bg:'rgba(0,196,154,.1)',   bdr:'rgba(0,196,154,.3)' } :
+        overallScore >= 70 ? { label:'Good 👍',          col:'#4ade80',      bg:'rgba(74,222,128,.1)', bdr:'rgba(74,222,128,.3)' } :
+        overallScore >= 55 ? { label:'Fair 📈',          col:'var(--orange)', bg:'rgba(255,107,53,.1)', bdr:'rgba(255,107,53,.3)' } :
+                             { label:'Keep Practising 💪', col:'#f87171',    bg:'rgba(248,113,113,.1)', bdr:'rgba(248,113,113,.3)' };
+
+      return (
+        <div className="anim-fade" style={{ minHeight:'100vh', paddingBottom:60 }}>
+          {/* Header */}
+          <div style={{ borderBottom:'1px solid var(--border)', padding:'18px 16px', background:'rgba(10,22,40,.95)', backdropFilter:'blur(6px)', position:'sticky', top:0, zIndex:10 }}>
+            <div className="container" style={{ display:'flex', alignItems:'center', justifyContent:'space-between' }}>
+              <div style={{ display:'flex', alignItems:'center', gap:10 }}>
+                <div style={{ width:32, height:32, borderRadius:9, background:'var(--orange)', display:'flex', alignItems:'center', justifyContent:'center', color:'#fff', fontWeight:900, fontSize:12 }}>TP</div>
+                <div>
+                  <p style={{ fontWeight:900, fontSize:15, lineHeight:1 }}>TALK <span style={{ color:'var(--orange)' }}>PRO</span></p>
+                  <p style={{ color:'var(--muted)', fontSize:11 }}>Interview Results</p>
+                </div>
+              </div>
+              <button onClick={onRestart} className="btn btn-secondary" style={{ padding:'9px 18px', fontSize:13 }}>Try Again</button>
+            </div>
+          </div>
+
+          <div className="container" style={{ paddingTop:28 }}>
+
+            {/* Hero score */}
+            <div className="card anim-up" style={{ padding:32, textAlign:'center', marginBottom:20 }}>
+              <p style={{ color:'var(--muted)', fontSize:13, marginBottom:4 }}>{profile?.name}'s Interview Score</p>
+              <h2 style={{ fontSize:16, fontWeight:700, marginBottom:24 }}>{profile?.targetRole} · {profile?.interviewStage}</h2>
+              <ScoreCircle score={overallScore} />
+              <div style={{ display:'inline-flex', alignItems:'center', marginTop:14, padding:'6px 18px', borderRadius:99, background:grade.bg, border:`1px solid ${grade.bdr}`, color:grade.col, fontWeight:700, fontSize:14 }}>
+                {grade.label}
+              </div>
+              {overallFeedback && (
+                <p style={{ color:'var(--muted)', fontSize:14, lineHeight:1.65, marginTop:14, maxWidth:380, margin:'14px auto 0' }}>{overallFeedback}</p>
+              )}
+              {/* JD match */}
+              <div style={{ display:'inline-block', marginTop:20, padding:14, background:'var(--navy)', borderRadius:14, border:'1px solid var(--border)' }}>
+                <p style={{ color:'var(--muted)', fontSize:12, marginBottom:8 }}>JD Match Score</p>
+                <div style={{ display:'flex', alignItems:'center', gap:10 }}>
+                  <div className="progress-track" style={{ width:160 }}>
+                    <div style={{ height:'100%', borderRadius:99, transition:'width 1.2s .5s ease', width:`${jdMatchPercent}%`, background:'linear-gradient(90deg, var(--orange), var(--teal))' }} />
+                  </div>
+                  <span style={{ fontWeight:800, fontSize:14 }}>{jdMatchPercent}%</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Strengths + Improvements */}
+            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:16, marginBottom:20 }}>
+              {/* Strengths */}
+              <div className="card" style={{ padding:20 }}>
+                <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:16 }}>
+                  <div style={{ width:28, height:28, borderRadius:8, background:'rgba(0,196,154,.15)', display:'flex', alignItems:'center', justifyContent:'center', color:'var(--teal)', fontWeight:800 }}>✓</div>
+                  <span style={{ fontWeight:700, fontSize:15 }}>3 Key Strengths</span>
+                </div>
+                <ol style={{ display:'flex', flexDirection:'column', gap:12 }}>
+                  {strengths.map((s, i) => (
+                    <li key={i} style={{ display:'flex', alignItems:'flex-start', gap:10 }}>
+                      <span style={{ width:20, height:20, borderRadius:'50%', background:'rgba(0,196,154,.15)', color:'var(--teal)', fontSize:11, fontWeight:800, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, marginTop:1 }}>{i+1}</span>
+                      <span style={{ fontSize:13, lineHeight:1.55 }}>{s}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+
+              {/* Improvements */}
+              <div className="card" style={{ padding:20 }}>
+                <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:16 }}>
+                  <div style={{ width:28, height:28, borderRadius:8, background:'rgba(255,107,53,.15)', display:'flex', alignItems:'center', justifyContent:'center', color:'var(--orange)', fontWeight:800, fontSize:13 }}>↑</div>
+                  <span style={{ fontWeight:700, fontSize:15 }}>3 Areas to Improve</span>
+                </div>
+                <ol style={{ display:'flex', flexDirection:'column', gap:12 }}>
+                  {improvements.map((imp, i) => (
+                    <li key={i} style={{ display:'flex', alignItems:'flex-start', gap:10 }}>
+                      <span style={{ width:20, height:20, borderRadius:'50%', background:'rgba(255,107,53,.15)', color:'var(--orange)', fontSize:11, fontWeight:800, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, marginTop:1 }}>{i+1}</span>
+                      <span style={{ fontSize:13, lineHeight:1.55 }}>{imp}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </div>
+
+            {/* Per-question feedback */}
+            <div className="card" style={{ padding:20, marginBottom:20 }}>
+              <h3 style={{ fontWeight:700, fontSize:15, marginBottom:16, display:'flex', alignItems:'center', gap:6 }}>
+                📝 Question-by-Question Feedback
+              </h3>
+              <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
+                {questionFeedback.map((qf, i) => {
+                  const q = questions.find(x => x.id === qf.questionId) || questions[i] || {};
+                  const open = expanded === i;
+                  const scoreCol = qf.score >= 8 ? 'var(--teal)' : qf.score >= 6 ? 'var(--orange)' : '#f87171';
+                  return (
+                    <div key={i} style={{ background:'var(--navy)', border:'1px solid var(--border)', borderRadius:14, overflow:'hidden' }}>
+                      <button
+                        onClick={() => setExpanded(open ? null : i)}
+                        style={{ width:'100%', padding:'14px 16px', display:'flex', alignItems:'center', gap:12, background:'none', border:'none', cursor:'pointer', color:'inherit', fontFamily:'inherit', textAlign:'left' }}>
+                        <span style={{ width:24, height:24, borderRadius:7, background:'var(--border)', color:'var(--muted)', fontSize:11, fontWeight:800, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+                          Q{i+1}
+                        </span>
+                        <span style={{ flex:1, fontSize:13, fontWeight:500, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
+                          {q.question || `Question ${i+1}`}
+                        </span>
+                        <span style={{ fontWeight:800, fontSize:14, color:scoreCol, flexShrink:0 }}>{qf.score}/10</span>
+                        <span style={{ color:'var(--muted)', fontSize:11, transform: open ? 'rotate(180deg)' : 'none', transition:'transform .2s' }}>▼</span>
+                      </button>
+
+                      {open && (
+                        <div style={{ padding:'0 16px 16px', borderTop:'1px solid var(--border)' }} className="anim-fade">
+                          {/* Their answer */}
+                          {answers[qf.questionId] && (
+                            <div style={{ marginBottom:14 }}>
+                              <p style={{ color:'var(--muted)', fontSize:11, fontWeight:700, textTransform:'uppercase', letterSpacing:'.05em', marginBottom:6, marginTop:12 }}>Your Answer</p>
+                              <p style={{ color:'var(--muted)', fontSize:13, lineHeight:1.6, background:'var(--card)', borderRadius:10, padding:12, fontStyle:'italic' }}>
+                                "{answers[qf.questionId]}"
+                              </p>
+                            </div>
+                          )}
+                          {/* Score bars */}
+                          {qf.scores && (
+                            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'8px 20px', marginBottom:14 }}>
+                              {[['Relevance','relevance','var(--orange)'],['Examples Used','examples','var(--orange)'],['Clarity & Structure','clarity','var(--teal)'],['Confidence','confidence','var(--teal)']].map(([lbl,key,col]) => (
+                                <div key={key}>
+                                  <div style={{ display:'flex', justifyContent:'space-between', marginBottom:4 }}>
+                                    <span style={{ color:'var(--muted)', fontSize:11 }}>{lbl}</span>
+                                    <span style={{ fontSize:11, fontWeight:700 }}>{qf.scores[key]}/10</span>
+                                  </div>
+                                  <div className="progress-track" style={{ height:4 }}>
+                                    <div style={{ height:'100%', borderRadius:99, background:col, width:`${(qf.scores[key]/10)*100}%`, transition:'width .7s .3s ease' }} />
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                          {/* Feedback text */}
+                          <div style={{ background:'rgba(255,107,53,.07)', border:'1px solid rgba(255,107,53,.2)', borderRadius:10, padding:12 }}>
+                            <p style={{ color:'var(--orange)', fontSize:11, fontWeight:700, textTransform:'uppercase', letterSpacing:'.05em', marginBottom:4 }}>AI Feedback</p>
+                            <p style={{ fontSize:13, lineHeight:1.6 }}>{qf.feedback}</p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Upgrade CTA */}
+            <div className="card" style={{ padding:28, marginBottom:20, textAlign:'center', border:'1px solid rgba(255,107,53,.25)', background:'linear-gradient(135deg, var(--card) 0%, rgba(10,22,40,.8) 100%)' }}>
+              <span className="badge badge-orange" style={{ marginBottom:12 }}>Upgrade Coming Soon</span>
+              <h3 style={{ fontWeight:800, fontSize:20, marginBottom:8 }}>Want a Full 30-Min Mock Interview?</h3>
+              <p style={{ color:'var(--muted)', fontSize:14, lineHeight:1.65, maxWidth:380, margin:'0 auto 20px' }}>
+                Get 15+ questions, a personalised STAR method improvement plan, and a downloadable PDF report — all for ₹99.
+              </p>
+              <button disabled className="btn btn-primary" style={{ opacity:.55, cursor:'not-allowed', fontSize:14 }}>
+                🔓 Unlock Full Feedback — ₹99
+              </button>
+              <p style={{ color:'var(--border)', fontSize:12, marginTop:8 }}>Feature launching soon · Stay tuned</p>
+            </div>
+
+            <button onClick={onRestart} className="btn btn-secondary btn-full">
+              Practice Again with a Different Role
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+
+    /* ═══════════════════════════════════════════════════
+       MAIN APP
+    ═══════════════════════════════════════════════════ */
+
+    const STEP = { ONBOARDING:1, JD_UPLOAD:2, CV_UPLOAD:3, MODE_SELECT:4, INTERVIEW:5, SCORECARD:6 };
+
+    function ErrorToast({ msg, onDismiss }) {
+      if (!msg) return null;
+      return (
+        <div className="anim-up" style={{ position:'fixed', top:16, left:0, right:0, margin:'0 auto', maxWidth:400, padding:'0 16px', zIndex:200, pointerEvents:'none' }}>
+          <div style={{ background:'rgba(248,113,113,.15)', border:'1px solid rgba(248,113,113,.4)', color:'#fca5a5', borderRadius:14, padding:'14px 16px', display:'flex', alignItems:'flex-start', gap:10, backdropFilter:'blur(8px)', pointerEvents:'all' }}>
+            <span style={{ fontSize:16, flexShrink:0 }}>⚠️</span>
+            <div style={{ flex:1 }}>
+              <p style={{ fontWeight:600, fontSize:13 }}>Something went wrong</p>
+              <p style={{ fontSize:12, opacity:.8, marginTop:2 }}>{msg}</p>
+            </div>
+            <button onClick={onDismiss} style={{ background:'none', border:'none', color:'inherit', cursor:'pointer', opacity:.7, fontSize:16, lineHeight:1, flexShrink:0 }}>✕</button>
+          </div>
+        </div>
+      );
+    }
+
+    function App() {
+      const [step, setStep]       = useState(STEP.ONBOARDING);
+      const [profile, setProfile] = useState(null);
+      const [jdText, setJdText]   = useState('');
+      const [cvText, setCvText]   = useState('');
+      const [questions, setQuestions] = useState([]);
+      const [answers, setAnswers]   = useState({});
+      const [results, setResults]   = useState(null);
+      const [loading, setLoading]   = useState(false);
+      const [loadingMsg, setLoadingMsg] = useState('');
+      const [error, setError]   = useState('');
+
+      async function handleModeSelect() {
+        setLoading(true); setError('');
+        setLoadingMsg('Gemini is analysing your CV and job description...');
+        try {
+          setTimeout(() => setLoadingMsg('Crafting 5 personalised questions for you...'), 2800);
+          const qs = await generateQuestions(GEMINI_API_KEY, profile, cvText, jdText);
+          setQuestions(qs);
+          setStep(STEP.INTERVIEW);
+        } catch (e) {
+          setError(e.message?.includes('401') || e.message?.includes('invalid') || e.message?.includes('API key')
+            ? 'Invalid API key. Please refresh and enter a valid Gemini API key from aistudio.google.com/apikey'
+            : e.message || 'Could not generate questions. Please try again.');
+        } finally { setLoading(false); }
+      }
+
+      async function handleInterviewComplete(ans) {
+        setAnswers(ans);
+        setLoading(true); setError('');
+        setLoadingMsg('Evaluating your answers...');
+        try {
+          setTimeout(() => setLoadingMsg('Generating your personalised scorecard...'), 2800);
+          const r = await evaluateAnswers(GEMINI_API_KEY, questions, ans, profile, jdText, cvText);
+          setResults(r);
+          setStep(STEP.SCORECARD);
+        } catch (e) {
+          setError(e.message || 'Could not evaluate answers. Please try again.');
+        } finally { setLoading(false); }
+      }
+
+      function restart() {
+        setStep(STEP.ONBOARDING);
+        setProfile(null); setJdText(''); setCvText('');
+        setQuestions([]); setAnswers({}); setResults(null); setError('');
+      }
+
+      return (
+        <div style={{ minHeight:'100vh', background:'var(--navy)' }}>
+          {loading && <LoadingOverlay message={loadingMsg} />}
+          <ErrorToast msg={error} onDismiss={() => setError('')} />
+
+          {step === STEP.ONBOARDING && <OnboardingForm onSubmit={p => { setProfile(p); setStep(STEP.JD_UPLOAD); }} />}
+          {step === STEP.JD_UPLOAD  && <JDUpload onSubmit={t => { setJdText(t); setStep(STEP.CV_UPLOAD); }} />}
+          {step === STEP.CV_UPLOAD  && <CVUpload onSubmit={t => { setCvText(t); setStep(STEP.MODE_SELECT); }} />}
+          {step === STEP.MODE_SELECT && <ModeSelect profile={profile} onContinue={handleModeSelect} />}
+          {step === STEP.INTERVIEW  && <InterviewScreen questions={questions} profile={profile} onComplete={handleInterviewComplete} />}
+          {step === STEP.SCORECARD  && <Scorecard results={results} profile={profile} questions={questions} answers={answers} onRestart={restart} />}
+        </div>
+      );
+    }
+
+    /* ── Render ── */
+    const rootEl = document.getElementById('root');
+    rootEl.innerHTML = '';
+    ReactDOM.createRoot(rootEl).render(<App />);
+  </script>
+</body>
+</html>
